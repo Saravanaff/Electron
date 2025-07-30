@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Screen Share App</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Screen Share Application</h1>
+            <div class="mode-selector">
+                <button id="hostBtn" class="mode-btn active">Host (Share Screen)</button>
+                <button id="clientBtn" class="mode-btn">Client (View Screen)</button>
+            </div>
+        </header>
+
+        <main>
+            <!-- Host Mode -->
+            <div id="hostMode" class="mode-panel active">
+                <div class="control-panel">
+                    <h3>Share Your Screen</h3>
+                    <div class="input-group">
+                        <label for="serverPort">Server Port:</label>
+                        <input type="number" id="serverPort" value="3000" min="1000" max="65535">
+                    </div>
+                    <button id="startSharingBtn" class="primary-btn">Start Sharing</button>
+                    <button id="stopSharingBtn" class="danger-btn" disabled>Stop Sharing</button>
+                </div>
+                
+                <div class="source-selection">
+                    <h4>Select Screen/Window to Share:</h4>
+                    <div id="sourcesList" class="sources-grid"></div>
+                </div>
+                
+                <div class="status-panel">
+                    <h4>Status:</h4>
+                    <div id="hostStatus" class="status">Ready to share</div>
+                    <div id="connectionInfo" class="connection-info"></div>
+                </div>
+            </div>
+
+            <!-- Client Mode -->
+            <div id="clientMode" class="mode-panel">
+                <div class="control-panel">
+                    <h3>Connect to Remote Screen</h3>
+                    <div class="input-group">
+                        <label for="serverIP">Server IP:</label>
+                        <input type="text" id="serverIP" placeholder="192.168.1.100" value="localhost">
+                    </div>
+                    <div class="input-group">
+                        <label for="clientPort">Server Port:</label>
+                        <input type="number" id="clientPort" value="3000" min="1000" max="65535">
+                    </div>
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="enableControl" checked>
+                        <label for="enableControl">Enable Remote Control</label>
+                    </div>
+                    <button id="connectBtn" class="primary-btn">Connect</button>
+                    <button id="disconnectBtn" class="danger-btn" disabled>Disconnect</button>
+                </div>
+                
+                <div class="status-panel">
+                    <h4>Status:</h4>
+                    <div id="clientStatus" class="status">Not connected</div>
+                </div>
+                
+                <div class="screen-container">
+                    <canvas id="remoteScreen" class="remote-screen"></canvas>
+                    <div id="screenPlaceholder" class="screen-placeholder">
+                        Remote screen will appear here
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="renderer.js"></script>
+</body>
+</html>
